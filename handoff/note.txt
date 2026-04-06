@@ -1,0 +1,10 @@
+Selected-base
+
+Steps:
+1. Start services with docker compose up -d
+2. Run ingestion using scripts/ws_ingest.py
+3. Validate stream with scripts/kafka_consume_check.py
+4. Generate features with features/featurizer.py
+5. Replay raw data with scripts/replay.py
+6. Train models with models/train.py
+7. Run inference with models/infer.py

@@ -1,0 +1,38 @@
+# Streaming configuration
+kafka:
+  bootstrap_servers: "localhost:9092"
+  topic_raw: "ticks.raw"
+  topic_features: "ticks.features"
+
+# WebSocket ingestion
+websocket:
+  url: "wss://advanced-trade-ws.coinbase.com"
+  product_ids:
+    - "BTC-USD"
+  channels:
+    - "ticker"
+  reconnect_delay_seconds: 5
+
+# Data storage
+paths:
+  raw_data: "data/raw/"
+  processed_data: "data/processed/"
+
+# Feature + labeling config
+features:
+  rolling_window_short: 10
+  rolling_window_medium: 20
+
+labels:
+  horizon_seconds: 60
+  tau_quantile: 0.95
+
+# Modeling
+model:
+  type: "logistic_regression"
+  threshold_search_steps: 30
+
+# MLflow
+mlflow:
+  tracking_uri: "http://localhost:5001"
+  experiment_name: "crypto_volatility_detection"

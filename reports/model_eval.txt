@@ -1,0 +1,55 @@
+Milestone 3: Modeling, Tracking, Evaluation
+
+Split summary
+-----------------
+Train label counts:
+label_spike
+0    3989
+1     190
+Name: count, dtype: int64
+
+Validation label counts:
+label_spike
+0    834
+1     61
+Name: count, dtype: int64
+
+Test label counts:
+label_spike
+0    848
+1     48
+Name: count, dtype: int64
+
+Baseline model: standardized absolute log return
+Validation PR-AUC: 0.068695
+Validation F1: 0.104348
+Test PR-AUC: 0.056699
+Test F1: 0.067308
+
+ML model: Logistic Regression
+Validation PR-AUC: 0.162638
+Validation F1: 0.285714
+Test PR-AUC: 0.106697
+Test F1: 0.250000
+
+Classification report: baseline
+              precision    recall  f1-score   support
+
+           0       0.94      0.82      0.88       848
+           1       0.04      0.15      0.07        48
+
+    accuracy                           0.78       896
+   macro avg       0.49      0.48      0.47       896
+weighted avg       0.90      0.78      0.83       896
+
+
+Classification report: logistic regression
+              precision    recall  f1-score   support
+
+           0       0.99      0.72      0.83       848
+           1       0.15      0.85      0.25        48
+
+    accuracy                           0.73       896
+   macro avg       0.57      0.79      0.54       896
+weighted avg       0.94      0.73      0.80       896
+

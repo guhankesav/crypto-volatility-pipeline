@@ -1,0 +1,11 @@
+{
+  "rows_scored": 5970,
+  "model_path": "models/artifacts/random_forest_pipeline.pkl",
+  "feature_cols_path": "models/artifacts/feature_columns.json",
+  "num_features": 8,
+  "threshold": 0.5,
+  "elapsed_seconds": 0.030477791000000032,
+  "rows_per_second": 195880.3379155659,
+  "avg_latency_ms_per_row": 0.005105157621440541,
+  "output_path": "models/artifacts/inference_predictions.csv"
+}

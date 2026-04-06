@@ -1,0 +1,10 @@
+[
+  "price",
+  "best_bid",
+  "best_ask",
+  "best_bid_quantity",
+  "best_ask_quantity",
+  "midprice",
+  "spread",
+  "log_return"
+]

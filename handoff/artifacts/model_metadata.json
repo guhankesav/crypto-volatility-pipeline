@@ -1,0 +1,20 @@
+{
+  "feature_cols": [
+    "midprice",
+    "spread",
+    "spread_bps",
+    "log_return",
+    "abs_log_return",
+    "best_bid_quantity",
+    "best_ask_quantity",
+    "bid_ask_qty_imbalance",
+    "ret_mean_10",
+    "ret_std_10",
+    "spread_mean_10",
+    "spread_std_10",
+    "price_change_5",
+    "volatility_10"
+  ],
+  "best_threshold": 0.525,
+  "model_type": "logistic_regression"
+}

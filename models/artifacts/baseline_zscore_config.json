@@ -1,0 +1,6 @@
+{
+  "feature": "best_bid_quantity",
+  "train_mean": 0.06963400958376963,
+  "train_std": 0.13120758369260047,
+  "val_pr_auc": 0.06263454729706219
+}

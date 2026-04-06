@@ -1,0 +1,86 @@
+{
+  "features_path": "data/processed/features_labeled.parquet",
+  "split_strategy": "stratified_fallback",
+  "target_col": "label_spike",
+  "time_col": "exchange_time",
+  "rows": {
+    "train": 3820,
+    "val": 956,
+    "test": 1194
+  },
+  "positive_rate": {
+    "train": 0.05,
+    "val": 0.0502092050209205,
+    "test": 0.05025125628140704
+  },
+  "runs": {
+    "baseline_zscore": {
+      "val_pr_auc": 0.06263454729706219,
+      "test_pr_auc": 0.06252042487051385,
+      "test_f1_best": 0.16304347826086957
+    },
+    "logreg_balanced": {
+      "val_pr_auc": 0.06986558251296901,
+      "test_pr_auc": 0.06864322749404948,
+      "test_f1_best": 0.20689655172413793
+    },
+    "random_forest": {
+      "val_pr_auc": 0.9698295467350286,
+      "test_pr_auc": 0.959680703020254,
+      "test_f1_best": 0.9032258064516129
+    },
+    "extra_trees": {
+      "val_pr_auc": 0.9041380602315536,
+      "test_pr_auc": 0.8666631938308735,
+      "test_f1_best": 0.803030303030303
+    }
+  },
+  "feature_columns": [
+    "price",
+    "best_bid",
+    "best_ask",
+    "best_bid_quantity",
+    "best_ask_quantity",
+    "midprice",
+    "spread",
+    "log_return"
+  ],
+  "excluded_leakage_columns": [
+    "sigma_future_60s"
+  ],
+  "random_forest_feature_importance": [
+    {
+      "feature": "midprice",
+      "importance": 0.26680150207338404
+    },
+    {
+      "feature": "best_bid",
+      "importance": 0.2549510305659342
+    },
+    {
+      "feature": "best_ask",
+      "importance": 0.22370481631754935
+    },
+    {
+      "feature": "price",
+      "importance": 0.2133285774001333
+    },
+    {
+      "feature": "best_ask_quantity",
+      "importance": 0.01739082119707068
+    },
+    {
+      "feature": "best_bid_quantity",
+      "importance": 0.013845985906798263
+    },
+    {
+      "feature": "log_return",
+      "importance": 0.006289944472268197
+    },
+    {
+      "feature": "spread",
+      "importance": 0.0036873220668618583
+    }
+  ],
+  "best_model_by_test_pr_auc": "random_forest"
+}

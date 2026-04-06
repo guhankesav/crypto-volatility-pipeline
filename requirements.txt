@@ -1,0 +1,11 @@
+websocket-client
+kafka-python
+pandas
+pyyaml
+python-dotenv
+mlflow
+evidently
+pyarrow
+scikit-learn
+matplotlib
+jupyter
