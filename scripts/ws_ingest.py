@@ -73,14 +73,24 @@ def main() -> None:
         ws = None
         try:
             ws = websocket.create_connection(WS_URL, timeout=30)
+
+            # Heartbeat handling:
+            # If no messages are received within 10 seconds, a timeout triggers
+            # reconnection and re-subscription.
+            ws.settimeout(10)
+
             subscribe_msg = build_subscribe_message(args.pair)
             ws.send(json.dumps(subscribe_msg))
             print(f"Subscribed to {args.pair}")
 
             while time.time() < end_time:
-                raw_msg = ws.recv()
-                if not raw_msg:
-                    continue
+                try:
+                    raw_msg = ws.recv()
+                    if not raw_msg:
+                        continue
+                except websocket.WebSocketTimeoutException:
+                    print("No data received for 10 seconds. Reconnecting...")
+                    raise Exception("Heartbeat timeout")
 
                 parsed = json.loads(raw_msg)
                 event = {
