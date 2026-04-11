@@ -27,7 +27,8 @@ services:
     container_name: mlflow
     working_dir: /app
     command: >
-      bash -c "pip install mlflow && mlflow server
+      bash -c "pip install mlflow &&
+      mlflow server
       --backend-store-uri sqlite:///mlflow.db
       --default-artifact-root /app/mlruns
       --host 0.0.0.0
@@ -35,19 +36,24 @@ services:
     ports:
       - "5001:5000"
     volumes:
-      - ./mlflow_data:/app
+      - ../docker/mlflow_data:/app
 
-  ingestor:
+  api:
     build:
       context: ..
-      dockerfile: docker/Dockerfile.ingestor
-    container_name: ingestor
-    working_dir: /app
+      dockerfile: docker/Dockerfile.api
+    container_name: crypto-api
     depends_on:
       - kafka
-    command: ["python", "scripts/ws_ingest.py", "--pair", "BTC-USD", "--minutes", "15", "--bootstrap_servers", "kafka:9092"]
+      - mlflow
     environment:
-      KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+      MODEL_PATH: "/app/models/artifacts/random_forest_pipeline.pkl"
+      APP_VERSION: "week4-thin-slice-v1"
+      MODEL_NAME: "random_forest"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ..:/app
 
 volumes:
   kafka_data:
