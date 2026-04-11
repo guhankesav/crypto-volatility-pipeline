@@ -7,6 +7,7 @@ from typing import Optional
 import pandas as pd
 from kafka import KafkaConsumer, KafkaProducer
 
+parser.add_argument("--out_path", type=str, default="data/processed/features.parquet")
 
 def safe_float(x) -> Optional[float]:
     try:
@@ -113,7 +114,7 @@ def main():
     if rows:
         os.makedirs("data/processed", exist_ok=True)
         df = pd.DataFrame(rows)
-        out_path = "data/processed/features.parquet"
+        out_path = args.out_path
         df.to_parquet(out_path, index=False)
         print(f"Saved {len(df)} rows to {out_path}")
     else:

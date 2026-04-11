@@ -9,3 +9,8 @@ pyarrow
 scikit-learn
 matplotlib
 jupyter
+fastapi
+uvicorn[standard]
+prometheus-client
+pydantic
+joblib

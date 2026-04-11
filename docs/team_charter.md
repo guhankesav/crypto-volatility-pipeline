@@ -1,91 +1,87 @@
-# 17-313 Real-Time Crypto AI Service  
-## Team Charter
+# Team Charter
 
-## Team Members: Roles, Strengths, Responsibilities
+## 17-313 Real-Time Crypto AI Service
+
+## Team Members
 
 | Name | Strengths | Responsibilities | Potential Obstacles |
 |------|----------|------------------|--------------------|
-| **Arianna** | Organization, product thinking, system design | Team charter, system diagram, coordination, ensuring deliverables align with rubric | Balancing multiple commitments |
-| **Aditi** | Analytical thinking, modeling | Model selection, evaluation, selection rationale doc, aligning model with system constraints | Model iteration time |
-| **Guhan** | Backend engineering, systems | FastAPI endpoints (/predict, /health, etc.), Kafka + MLflow setup, Docker orchestration | Debugging infra issues |
-| **Sean** | Data pipelines, testing | Replay pipeline, validating data flow, testing pipeline reliability | Handling edge cases in replay |
+| Guhan Kesavasamy | Backend engineering, ML & systems | FastAPI endpoints (/predict, /health, etc.), Kafka + MLflow setup, model selection, Docker orchestration | Debugging infrastructure issues |
+| Arianna Martinelli | Organization, product thinking, system design | Team charter, system diagram, coordination, ensuring deliverables align with rubric | Balancing multiple commitments |
+| Aditi Agni | Analytical thinking, modeling | Model selection, evaluation, selection rationale doc, aligning model with system constraints | Model iteration time |
+| Sean Lim | Data pipelines, testing | Replay pipeline, validating data flow, testing pipeline reliability | Handling edge cases in replay |
+
+---
+
+
+## Roles
+- Infra
+- API
+- Data pipeline
+- ML/modeling
+- Monitoring/docs
+
+## Working agreements
+- Small PRs
+- Daily sync on blockers
+- Shared testing before demo
+
+---
 
 ## Team Norms
 
 ### Communication
-- Primary channel: WhatsApp group chat  
-- Secondary: Email / Google Drive folder  
-
-**Expected response time:**
-- Weekdays: within 4–6 hours  
-- Weekends: within 12 hours  
-
-- All important updates (blocking issues, delays, major changes) must be communicated ASAP  
+- Primary: WhatsApp group
+- Secondary: Email / Google Drive
+- Response time:
+  - Weekdays: 4–6 hours
+  - Weekends: within 12 hours
+- Blocking issues must be communicated immediately
 
 ### Meetings
-- Weekly meeting: **Tuesdays 9:30–10:30 PM EST**  
-- Format: Online (Google Meets)  
+- Weekly meeting: Tuesday 9:30–10:30 PM EST
+- Platform: Google Meet
+- Expectations:
+  - Be on time
+  - Come prepared
+  - Review notes if absent
 
-**Expectations:**
-- Be on time  
-- Come prepared with updates  
-- If absent, review notes and follow up  
-
-### Deadlines & Workflow
-- Internal deadlines: **≥12 hours before submission deadline**
-
-**Work tracked via:**
-- GitHub repo (PRs/issues)  
-- Shared docs/notes  
-
-**If falling behind:**
-- Notify team early  
-- Redistribute tasks if needed  
+### Workflow
+- Internal deadlines: at least 12 hours before submission
+- Work tracking: GitHub (PRs/issues) + shared docs
+- If behind:
+  - Notify early
+  - Redistribute tasks
 
 ### Quality Standards
-
-**Code must:**
-- Run locally with `docker compose up -d`  
-- Follow linting standards (Black/Ruff)  
-- Be tested at least minimally  
-
-**Deliverables must:**
-- Match rubric requirements  
-- Be clean, readable, and documented  
+- Code must:
+  - Run with docker compose up -d
+  - Be readable and minimally tested
+- Deliverables must:
+  - Match rubric
+  - Be clearly documented
 
 ### Accountability
-- Each member owns their component end-to-end  
-- Progress is visible through commits and updates  
-
-**If work is incomplete:**
-- Team discusses and supports  
-- Reassign if necessary  
+- Each member owns their component
+- Progress tracked via commits
+- Incomplete work handled collaboratively
 
 ### Conflict Resolution
-1. Open discussion within team  
-2. If unresolved → majority decision  
-3. If still unresolved → escalate to TA/instructor  
+- Discuss within team
+- Majority decision if needed
+- Escalate to TA/instructor if unresolved
 
-### Invoking the Charter
-- Any member can call out when expectations are not being met  
+### Expectations
+- Time commitment: 5–10 hours/week
+- Flexibility allowed for interviews/illness with early communication
 
-## Expectations
-- Expected time commitment: **5–10 hours/week per person**
-
-**Flexibility for:**
-- Interviews  
-- Illness  
-- Other commitments  
-
-Requirements:
-- Communicate early  
-- Adjust workload collaboratively  
+---
 
 ## Acknowledgment
 
-By participating in this project, each member agrees to follow this charter and contribute responsibly to the team’s success.
+By participating in this project, each member agrees to follow this charter and contribute responsibly.
 
-- **Arianna** — 4/7/2026  
-- **Aditi** — 4/7/2026  
-- **Guhan** — 4/7/2026  
-- **Sean** — 4/7/2026  
+Guhan Kesavasamy  
+Arianna Martinelli  
+Aditi Agni  
+Sean Lim
