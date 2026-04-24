@@ -1,0 +1,320 @@
+{
+    "metrics": [
+        {
+            "id": "00404ffe284d7862baa4095093452630",
+            "metric_name": "RowCount()",
+            "config": {
+                "type": "evidently:metric_v2:RowCount"
+            },
+            "value": 1194.0
+        },
+        {
+            "id": "91e498263b6502661774b15eb39ea154",
+            "metric_name": "ColumnCount()",
+            "config": {
+                "type": "evidently:metric_v2:ColumnCount"
+            },
+            "value": 4.0
+        },
+        {
+            "id": "31b8c78bad2b7108842265cd082d5abf",
+            "metric_name": "ColumnCount(column_type=ColumnType.Numerical)",
+            "config": {
+                "type": "evidently:metric_v2:ColumnCount",
+                "tests": [],
+                "column_type": "num"
+            },
+            "value": 1.0
+        },
+        {
+            "id": "bb154bb9a843cad0d72fa3dc4983394d",
+            "metric_name": "ColumnCount(column_type=ColumnType.Categorical)",
+            "config": {
+                "type": "evidently:metric_v2:ColumnCount",
+                "tests": [],
+                "column_type": "cat"
+            },
+            "value": 2.0
+        },
+        {
+            "id": "012cbfb269361272d4773e1a68559396",
+            "metric_name": "ColumnCount(column_type=ColumnType.Datetime)",
+            "config": {
+                "type": "evidently:metric_v2:ColumnCount",
+                "tests": [],
+                "column_type": "datetime"
+            },
+            "value": 0.0
+        },
+        {
+            "id": "3f5e595e26bc8e120aadf51967bb0355",
+            "metric_name": "ColumnCount(column_type=ColumnType.Text)",
+            "config": {
+                "type": "evidently:metric_v2:ColumnCount",
+                "tests": [],
+                "column_type": "text"
+            },
+            "value": 1.0
+        },
+        {
+            "id": "ff1caea5e148b287bd5348d4bb40eccf",
+            "metric_name": "DuplicatedRowCount()",
+            "config": {
+                "type": "evidently:metric_v2:DuplicatedRowCount"
+            },
+            "value": 0.0
+        },
+        {
+            "id": "02fbcbd017b30a0b075d9d5a72ce2a32",
+            "metric_name": "DuplicatedColumnsCount()",
+            "config": {
+                "type": "evidently:metric_v2:DuplicatedColumnsCount"
+            },
+            "value": 0.0
+        },
+        {
+            "id": "4c2efb888b5c5f8afb50895b4b4abcec",
+            "metric_name": "AlmostDuplicatedColumnsCount()",
+            "config": {
+                "type": "evidently:metric_v2:AlmostDuplicatedColumnsCount"
+            },
+            "value": 0.0
+        },
+        {
+            "id": "9e9fa5ec57528fadbf97a35ad5b66838",
+            "metric_name": "AlmostConstantColumnsCount()",
+            "config": {
+                "type": "evidently:metric_v2:AlmostConstantColumnsCount"
+            },
+            "value": 1.0
+        },
+        {
+            "id": "c86e32eba7f3826051b804c0df7a97fe",
+            "metric_name": "EmptyRowsCount()",
+            "config": {
+                "type": "evidently:metric_v2:EmptyRowsCount"
+            },
+            "value": 0.0
+        },
+        {
+            "id": "ce527bc2e35349e7f7a2e047a57f85ca",
+            "metric_name": "EmptyColumnsCount()",
+            "config": {
+                "type": "evidently:metric_v2:EmptyColumnsCount"
+            },
+            "value": 0.0
+        },
+        {
+            "id": "5f958296980b95bddb41264800ab7a93",
+            "metric_name": "ConstantColumnsCount()",
+            "config": {
+                "type": "evidently:metric_v2:ConstantColumnsCount"
+            },
+            "value": 1.0
+        },
+        {
+            "id": "89b8d715e93a15e3acbc483410aff2f4",
+            "metric_name": "DatasetMissingValueCount()",
+            "config": {
+                "type": "evidently:metric_v2:DatasetMissingValueCount"
+            },
+            "value": {
+                "count": 0.0,
+                "share": 0.0
+            }
+        },
+        {
+            "id": "99969955422d112b72422cc4d1b3c1b6",
+            "metric_name": "MissingValueCount(column=product_id)",
+            "config": {
+                "type": "evidently:metric_v2:MissingValueCount",
+                "column": "product_id"
+            },
+            "value": {
+                "count": 0.0,
+                "share": 0.0
+            }
+        },
+        {
+            "id": "1bb1b1eb89a7ea9ea78fa4d7298db85b",
+            "metric_name": "UniqueValueCount(column=product_id)",
+            "config": {
+                "type": "evidently:metric_v2:UniqueValueCount",
+                "column": "product_id"
+            },
+            "value": {
+                "counts": {
+                    "BTC-USD": 1194.0
+                },
+                "shares": {
+                    "BTC-USD": 1.0
+                }
+            }
+        },
+        {
+            "id": "7ec71eacb730e2d84e6e57f4a98732d3",
+            "metric_name": "MissingValueCount(column=y_true)",
+            "config": {
+                "type": "evidently:metric_v2:MissingValueCount",
+                "column": "y_true"
+            },
+            "value": {
+                "count": 0.0,
+                "share": 0.0
+            }
+        },
+        {
+            "id": "4855f0b5ef4826e6bd37efb04efcdcb8",
+            "metric_name": "UniqueValueCount(column=y_true)",
+            "config": {
+                "type": "evidently:metric_v2:UniqueValueCount",
+                "column": "y_true"
+            },
+            "value": {
+                "counts": {
+                    "0": 1134.0,
+                    "1": 60.0
+                },
+                "shares": {
+                    "0": 0.949748743718593,
+                    "1": 0.05025125628140704
+                }
+            }
+        },
+        {
+            "id": "032694704c7b1b7e84e46f89840a8352",
+            "metric_name": "MissingValueCount(column=score)",
+            "config": {
+                "type": "evidently:metric_v2:MissingValueCount",
+                "column": "score"
+            },
+            "value": {
+                "count": 0.0,
+                "share": 0.0
+            }
+        },
+        {
+            "id": "91964fcd4189b286a25e8f175e290602",
+            "metric_name": "MinValue(column=score)",
+            "config": {
+                "type": "evidently:metric_v2:MinValue",
+                "column": "score"
+            },
+            "value": 0.0
+        },
+        {
+            "id": "012c1c5e214126375baa49385f23c688",
+            "metric_name": "MaxValue(column=score)",
+            "config": {
+                "type": "evidently:metric_v2:MaxValue",
+                "column": "score"
+            },
+            "value": 0.9995298129921584
+        },
+        {
+            "id": "1b0d2d0a68a47b346398076c6d6e761b",
+            "metric_name": "MeanValue(column=score)",
+            "config": {
+                "type": "evidently:metric_v2:MeanValue",
+                "column": "score"
+            },
+            "value": 0.07275174308952158
+        },
+        {
+            "id": "cd4673229bdf0c03b4a5000b2a14977e",
+            "metric_name": "StdValue(column=score)",
+            "config": {
+                "type": "evidently:metric_v2:StdValue",
+                "column": "score"
+            },
+            "value": 0.22617828375039498
+        },
+        {
+            "id": "f37f39dc518093653ffebaf7f9dbc376",
+            "metric_name": "QuantileValue(column=score,quantile=0.25)",
+            "config": {
+                "type": "evidently:metric_v2:QuantileValue",
+                "column": "score",
+                "quantile": 0.25
+            },
+            "value": 0.0
+        },
+        {
+            "id": "289588a1e8f599bad486d9b3993e4d37",
+            "metric_name": "QuantileValue(column=score,quantile=0.5)",
+            "config": {
+                "type": "evidently:metric_v2:QuantileValue",
+                "column": "score",
+                "quantile": 0.5
+            },
+            "value": 0.0
+        },
+        {
+            "id": "13fb8be692de9fc4af2346c81434112b",
+            "metric_name": "QuantileValue(column=score,quantile=0.75)",
+            "config": {
+                "type": "evidently:metric_v2:QuantileValue",
+                "column": "score",
+                "quantile": 0.75
+            },
+            "value": 0.0
+        },
+        {
+            "id": "15e89f895b482f9b84ba7274ed18a106",
+            "metric_name": "DriftedColumnsCount(drift_share=0.5)",
+            "config": {
+                "type": "evidently:metric_v2:DriftedColumnsCount",
+                "drift_share": 0.5
+            },
+            "value": {
+                "count": 1.0,
+                "share": 0.25
+            }
+        },
+        {
+            "id": "90c40c3f9ee4b3d81f348068cffcf95c",
+            "metric_name": "ValueDrift(column=score,method=Wasserstein distance (normed),threshold=0.1)",
+            "config": {
+                "type": "evidently:metric_v2:ValueDrift",
+                "column": "score",
+                "method": "Wasserstein distance (normed)",
+                "threshold": 0.1
+            },
+            "value": 1.2299945502651988
+        },
+        {
+            "id": "0d79a67e0d11e703467c4484716254b7",
+            "metric_name": "ValueDrift(column=product_id,method=Jensen-Shannon distance,threshold=0.1)",
+            "config": {
+                "type": "evidently:metric_v2:ValueDrift",
+                "column": "product_id",
+                "method": "Jensen-Shannon distance",
+                "threshold": 0.1
+            },
+            "value": 0.0
+        },
+        {
+            "id": "33d05e2627786b2514b98fddab71a345",
+            "metric_name": "ValueDrift(column=y_true,method=Jensen-Shannon distance,threshold=0.1)",
+            "config": {
+                "type": "evidently:metric_v2:ValueDrift",
+                "column": "y_true",
+                "method": "Jensen-Shannon distance",
+                "threshold": 0.1
+            },
+            "value": 0.0
+        },
+        {
+            "id": "c75eff5f7c0c913ad2ee70cc1cd44fdc",
+            "metric_name": "ValueDrift(column=exchange_time,method=Absolute text content drift,threshold=0.55)",
+            "config": {
+                "type": "evidently:metric_v2:ValueDrift",
+                "column": "exchange_time",
+                "method": "Absolute text content drift",
+                "threshold": 0.55
+            },
+            "value": 0.16406618257727096
+        }
+    ],
+    "tests": []
+}

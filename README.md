@@ -8,6 +8,19 @@ It extends the earlier crypto volatility spike detection work with a FastAPI ser
 
 ---
 
+## Quick Start
+
+```bash
+docker compose up -d --build
+curl http://localhost:8000/health
+curl http://localhost:8000/version
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"rows":[{"ret_mean":0.05,"ret_std":0.01,"n":50}]}'
+```
+
+---
+
 ## Team Members
 
 | Name | Strengths | Responsibilities | Potential Obstacles |
@@ -202,7 +215,7 @@ curl http://localhost:8000/health
 Expected output:
 
 ```json
-{"status":"ok","model_loaded":true}
+{"status":"ok"}
 ```
 
 ---
@@ -212,7 +225,7 @@ Expected output:
 ### 1. `GET /health`
 
 #### Description
-Checks whether the API is running and whether the selected model artifact can be loaded successfully.
+Checks whether the API is running.
 
 #### Command
 ```bash
@@ -221,7 +234,7 @@ curl http://localhost:8000/health
 
 #### Sample output
 ```json
-{"status":"ok","model_loaded":true}
+{"status":"ok"}
 ```
 
 ---
@@ -229,7 +242,7 @@ curl http://localhost:8000/health
 ### 2. `GET /version`
 
 #### Description
-Returns service-level metadata, including the deployed service version and selected model name.
+Returns service-level model metadata.
 
 #### Command
 ```bash
@@ -238,7 +251,7 @@ curl http://localhost:8000/version
 
 #### Sample output
 ```json
-{"service":"crypto-volatility-api","version":"week4-thin-slice-v1","model_name":"random_forest"}
+{"model":"random_forest","sha":"unknown"}
 ```
 
 ---
@@ -246,7 +259,7 @@ curl http://localhost:8000/version
 ### 3. `GET /metrics`
 
 #### Description
-Exposes Prometheus-style monitoring metrics for request counts, errors, and latency.
+Exposes Prometheus-style monitoring metrics for requests, errors, latency, and freshness.
 
 #### Command
 ```bash
@@ -268,31 +281,28 @@ predict_errors_total 0.0
 ### 4. `POST /predict`
 
 #### Description
-Accepts a feature payload and returns a binary prediction with a probability score for a future 60-second volatility spike.
+Accepts summary statistics for a batch of rows and returns prediction scores.
 
 #### Command
 ```bash
 curl -X POST http://localhost:8000/predict \
   -H "Content-Type: application/json" \
-  -d '{
-    "price": 65000.0,
-    "best_bid": 64999.5,
-    "best_ask": 65000.5,
-    "best_bid_quantity": 1.2,
-    "best_ask_quantity": 0.9,
-    "log_return": 0.0008,
-    "product_id": "BTC-USD"
-  }'
+  -d '{"rows":[{"ret_mean":0.05,"ret_std":0.01,"n":50}]}'
 ```
 
 #### Sample output
 ```json
-{"model_version":"week4-thin-slice-v1","prediction":0,"probability":0.012586545587822025}
+{
+  "scores": [0.74],
+  "model_variant": "ml",
+  "version": "v1.2",
+  "ts": "2025-11-02T14:33:00Z"
+}
 ```
 
 #### Notes
-- A low probability is expected for calm, non-spike inputs
-- The target is imbalanced, so most normal observations should receive low spike probabilities
+- The exact score value depends on the loaded model variant and artifact
+- The response shape is fixed to match the assignment API contract
 
 ---
 
@@ -319,15 +329,7 @@ curl -s http://localhost:8000/metrics | grep '^predict_requests_total'
 ```bash
 curl -X POST http://localhost:8000/predict \
   -H "Content-Type: application/json" \
-  -d '{
-    "price": 65000.0,
-    "best_bid": 64999.5,
-    "best_ask": 65000.5,
-    "best_bid_quantity": 1.2,
-    "best_ask_quantity": 0.9,
-    "log_return": 0.0008,
-    "product_id": "BTC-USD"
-  }'
+  -d '{"rows":[{"ret_mean":0.05,"ret_std":0.01,"n":50}]}'
 ```
 
 ### Step 5: Metrics after prediction
@@ -515,6 +517,63 @@ Details are documented in:
 
 ```text
 docs/genai_appendix.md
+```
+
+---
+
+## Week 6 – Monitoring, SLOs & Drift
+
+### Grafana Dashboard
+
+The Week 6 Grafana dashboard tracks:
+- p50 / p95 latency
+- request rate
+- error rate
+- freshness
+- p95 SLO compliance
+
+![Grafana Dashboard](docs/images/grafana_dashboard.png)
+
+### Observability Stack
+
+- Prometheus scrapes the FastAPI `/metrics` endpoint
+- Grafana visualizes service health and prediction behavior
+- Alert rules are defined in `docker/prometheus_alerts.yml`
+- The dashboard JSON is stored at `docker/grafana/dashboards/crypto_week6_dashboard.json`
+- Prometheus metrics include request count, error count, latency, and prediction freshness
+
+### Service Level Objectives
+
+- SLOs are documented in `docs/slo.md`
+- p95 latency target: `<= 800 ms`
+- error rate target: `<= 1%`
+- freshness target: `<= 60 seconds`
+
+### Drift Detection
+
+- Evidently drift script: `scripts/generate_drift_report.py`
+- Report artifacts:
+  - `reports/evidently_report.html`
+  - `reports/evidently_report.json`
+- Summary: `docs/drift_summary.md`
+
+### Rollback Support
+
+- Runtime model variant can be selected with `MODEL_VARIANT=ml|baseline`
+- Example rollback command:
+
+```bash
+MODEL_VARIANT=baseline docker compose up -d --build
+```
+
+### Validation Commands
+
+```bash
+docker compose up -d --build
+curl http://localhost:8000/health
+curl http://localhost:8000/version
+curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d '{"rows":[{"ret_mean":0.05,"ret_std":0.01,"n":50}]}'
+curl http://localhost:8000/metrics | grep -E "predict_requests_total|predict_latency_seconds_count|last_prediction_timestamp_seconds"
 ```
 
 ---
