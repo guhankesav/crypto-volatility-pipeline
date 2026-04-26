@@ -580,6 +580,9 @@ curl http://localhost:8000/metrics | grep -E "predict_requests_total|predict_lat
 ```
 
 ---
+## Week 7 - Final Deliverables
+Please find the link to a live demo of the crypto service here : https://youtu.be/0osYFbPrN0U 
+
 
 ## Conclusion
 
