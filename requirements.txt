@@ -14,3 +14,7 @@ uvicorn[standard]
 prometheus-client
 pydantic
 joblib
+# dev / CI
+pytest
+httpx
+ruff

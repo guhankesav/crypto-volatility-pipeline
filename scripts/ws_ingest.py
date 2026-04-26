@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import signal
 import time
 from datetime import datetime, timezone
 
@@ -9,6 +10,14 @@ from kafka import KafkaProducer
 from kafka.errors import NoBrokersAvailable
 
 WS_URL = "wss://advanced-trade-ws.coinbase.com"
+
+_shutdown_requested = False
+
+
+def _handle_signal(signum, frame):
+    global _shutdown_requested
+    print(f"Signal {signum} received — shutting down ingestor...")
+    _shutdown_requested = True
 
 
 def make_producer(bootstrap_servers: str) -> KafkaProducer:
@@ -55,6 +64,9 @@ def build_subscribe_message(product_id: str) -> dict:
 
 
 def main() -> None:
+    signal.signal(signal.SIGTERM, _handle_signal)
+    signal.signal(signal.SIGINT, _handle_signal)
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--pair", type=str, default="BTC-USD")
     parser.add_argument("--minutes", type=int, default=15)
@@ -69,7 +81,7 @@ def main() -> None:
 
     msg_count = 0
 
-    while time.time() < end_time:
+    while time.time() < end_time and not _shutdown_requested:
         ws = None
         try:
             ws = websocket.create_connection(WS_URL, timeout=30)
@@ -83,7 +95,7 @@ def main() -> None:
             ws.send(json.dumps(subscribe_msg))
             print(f"Subscribed to {args.pair}")
 
-            while time.time() < end_time:
+            while time.time() < end_time and not _shutdown_requested:
                 try:
                     raw_msg = ws.recv()
                     if not raw_msg:
