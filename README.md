@@ -8,7 +8,7 @@ It extends the earlier crypto volatility spike detection work with a FastAPI ser
 
 ---
 
-**Minimal setup (≤5 steps):** [docs/SETUP.md](docs/SETUP.md) · **Burst load / latency (100 requests):** [docs/latency_report.md](docs/latency_report.md) · **Final metrics summary:** [docs/final_summary.md](docs/final_summary.md)
+**Minimal setup (≤5 steps):** [docs/SETUP.md](docs/SETUP.md) · **Burst load / latency (100 requests):** [docs/latency_report.md](docs/latency_report.md) · **Final metrics summary:** [docs/final_summary.md](docs/final_summary.md) · **Replay→serving validation path:** [docs/replay_validation.md](docs/replay_validation.md)
 
 ## Quick Start
 

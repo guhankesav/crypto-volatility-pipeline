@@ -29,7 +29,7 @@ labels:
 
 # Modeling
 model:
-  type: "logistic_regression"
+  type: "random_forest"
   threshold_search_steps: 30
 
 # MLflow
