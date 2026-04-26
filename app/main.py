@@ -6,7 +6,7 @@ import os
 import pickle
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 

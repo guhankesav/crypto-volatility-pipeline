@@ -1,13 +1,23 @@
+from __future__ import annotations
+
 import argparse
 import json
 import math
 import os
+import signal
 from typing import Optional
 
 import pandas as pd
 from kafka import KafkaConsumer, KafkaProducer
 
-parser.add_argument("--out_path", type=str, default="data/processed/features.parquet")
+_shutdown_requested = False
+
+
+def _handle_signal(signum, frame):
+    global _shutdown_requested
+    print(f"Signal {signum} received — shutting down featurizer...")
+    _shutdown_requested = True
+
 
 def safe_float(x) -> Optional[float]:
     try:
@@ -32,11 +42,15 @@ def extract_ticker(payload: dict) -> Optional[dict]:
 
 
 def main():
+    signal.signal(signal.SIGTERM, _handle_signal)
+    signal.signal(signal.SIGINT, _handle_signal)
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--topic_in", type=str, default="ticks.raw")
     parser.add_argument("--topic_out", type=str, default="ticks.features")
     parser.add_argument("--bootstrap_servers", type=str, default="localhost:9092")
     parser.add_argument("--max_messages", type=int, default=100)
+    parser.add_argument("--out_path", type=str, default="data/processed/features.parquet")
     args = parser.parse_args()
 
     consumer = KafkaConsumer(
@@ -50,7 +64,7 @@ def main():
 
     producer = KafkaProducer(
         bootstrap_servers=args.bootstrap_servers,
-        value_serializer=lambda v: json.dumps(v).encode("utf-8")
+        value_serializer=lambda v: json.dumps(v).encode("utf-8"),
     )
 
     rows = []
@@ -59,64 +73,68 @@ def main():
 
     print(f"Reading from {args.topic_in} and writing to {args.topic_out}")
 
-    for msg in consumer:
-        event = msg.value
-        payload = event.get("payload", {})
-        ticker = extract_ticker(payload)
+    try:
+        for msg in consumer:
+            if _shutdown_requested:
+                break
 
-        if ticker is None:
-            continue
+            event = msg.value
+            payload = event.get("payload", {})
+            ticker = extract_ticker(payload)
 
-        price = safe_float(ticker.get("price"))
-        best_bid = safe_float(ticker.get("best_bid"))
-        best_ask = safe_float(ticker.get("best_ask"))
-        bid_qty = safe_float(ticker.get("best_bid_quantity"))
-        ask_qty = safe_float(ticker.get("best_ask_quantity"))
+            if ticker is None:
+                continue
 
-        if best_bid is None or best_ask is None:
-            continue
+            price = safe_float(ticker.get("price"))
+            best_bid = safe_float(ticker.get("best_bid"))
+            best_ask = safe_float(ticker.get("best_ask"))
+            bid_qty = safe_float(ticker.get("best_bid_quantity"))
+            ask_qty = safe_float(ticker.get("best_ask_quantity"))
 
-        midprice = (best_bid + best_ask) / 2.0
-        spread = best_ask - best_bid
+            if best_bid is None or best_ask is None:
+                continue
 
-        log_return = None
-        if prev_midprice is not None and prev_midprice > 0 and midprice > 0:
-            log_return = math.log(midprice / prev_midprice)
+            midprice = (best_bid + best_ask) / 2.0
+            spread = best_ask - best_bid
 
-        feature_row = {
-            "ingest_time": event.get("ingest_time"),
-            "exchange_time": payload.get("timestamp"),
-            "product_id": event.get("product_id"),
-            "price": price,
-            "best_bid": best_bid,
-            "best_ask": best_ask,
-            "best_bid_quantity": bid_qty,
-            "best_ask_quantity": ask_qty,
-            "midprice": midprice,
-            "spread": spread,
-            "log_return": log_return,
-        }
+            log_return = None
+            if prev_midprice is not None and prev_midprice > 0 and midprice > 0:
+                log_return = math.log(midprice / prev_midprice)
 
-        producer.send(args.topic_out, feature_row)
-        rows.append(feature_row)
+            feature_row = {
+                "ingest_time": event.get("ingest_time"),
+                "exchange_time": payload.get("timestamp"),
+                "product_id": event.get("product_id"),
+                "price": price,
+                "best_bid": best_bid,
+                "best_ask": best_ask,
+                "best_bid_quantity": bid_qty,
+                "best_ask_quantity": ask_qty,
+                "midprice": midprice,
+                "spread": spread,
+                "log_return": log_return,
+            }
 
-        prev_midprice = midprice
-        processed += 1
+            producer.send(args.topic_out, feature_row)
+            rows.append(feature_row)
 
-        if processed % 10 == 0:
-            print(f"Processed {processed} feature rows")
+            prev_midprice = midprice
+            processed += 1
 
-        if processed >= args.max_messages:
-            break
+            if processed % 10 == 0:
+                print(f"Processed {processed} feature rows")
 
-    producer.flush()
+            if processed >= args.max_messages:
+                break
+    finally:
+        producer.flush()
+        consumer.close()
 
     if rows:
         os.makedirs("data/processed", exist_ok=True)
         df = pd.DataFrame(rows)
-        out_path = args.out_path
-        df.to_parquet(out_path, index=False)
-        print(f"Saved {len(df)} rows to {out_path}")
+        df.to_parquet(args.out_path, index=False)
+        print(f"Saved {len(df)} rows to {args.out_path}")
     else:
         print("No feature rows generated.")
 

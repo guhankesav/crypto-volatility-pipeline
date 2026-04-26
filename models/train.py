@@ -2,24 +2,20 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
-import os
 import pickle
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 import mlflow
 import mlflow.sklearn
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.base import clone
 from sklearn.impute import SimpleImputer
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
-    PrecisionRecallDisplay,
     average_precision_score,
     classification_report,
     f1_score,
