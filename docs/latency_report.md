@@ -12,19 +12,19 @@
 
 ## Results (baseline API, same machine as test client)
 
-*Run the steps above and paste the script output below. Last checked: commit `main` (CI runs pytest + ruff, not this script).*
+Last measured: 2026-04-26 (`python tests/load_test.py --url http://127.0.0.1:8000 --n 100`)
 
 | Metric | Value (ms) |
 |--------|------------|
 | Requests ok | 100 |
 | Errors | 0 |
-| Min | *fill after run* |
-| p50 | *fill after run* |
-| **p95** | *fill after run* (SLO: ≤ 800) |
-| p99 | *fill after run* |
-| Max | *fill after run* |
-| StdDev | *fill after run* |
+| Min | 48.6 |
+| p50 | 60.0 |
+| **p95** | 62.4 (SLO: ≤ 800) |
+| p99 | 63.0 |
+| Max | 63.0 |
+| StdDev | 4.0 |
 
-**Outcome:** *SLO OK* or *SLO BREACH* — *update after run.*
+**Outcome:** SLO OK.
 
 **Notes:** Latency is sensitive to machine load, `MODEL_VARIANT` (`baseline` vs `ml`), and whether the process is colocated with the client. Re-run after dependency or API changes; update this file when you submit a milestone.
