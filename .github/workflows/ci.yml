@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "claude/**"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    env:
+      MODEL_VARIANT: baseline
+      APP_VERSION: v1.2
+      MODEL_NAME: random_forest
+      GIT_SHA: ${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install ruff pytest httpx \
+            fastapi "uvicorn[standard]" prometheus-client pydantic \
+            pandas scikit-learn joblib
+
+      - name: Lint with Ruff
+        run: ruff check .
+
+      - name: Run integration tests
+        run: python -m pytest tests/ -v

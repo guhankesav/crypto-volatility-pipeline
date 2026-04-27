@@ -1,0 +1,12 @@
+apiVersion: 1
+
+providers:
+  - name: crypto-week6
+    orgId: 1
+    folder: Week 6
+    type: file
+    disableDeletion: false
+    allowUiUpdates: true
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards
